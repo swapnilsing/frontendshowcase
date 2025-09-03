@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Frontend Showcase - Static</title>
+  <style>
+    :root{--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#475569}
+    [data-theme='dark']{--bg:#0b1220;--card:#0f172a;--text:#e6eef8;--muted:#94a3b8}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:var(--text);line-height:1.4}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .nav-links{display:flex;gap:16px}
+    .hero{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;margin-top:24px}
+    @media(min-width:768px){.hero{grid-template-columns:1fr 1fr}}
+    .cards{display:grid;grid-template-columns:1fr;gap:16px;margin-top:24px}
+    @media(min-width:640px){.cards{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.cards{grid-template-columns:repeat(4,1fr)}}
+    .card{background:var(--card);padding:16px;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+    .portfolio{display:grid;gap:16px;margin-top:24px}
+    @media(min-width:640px){.portfolio{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.portfolio{grid-template-columns:repeat(3,1fr)}}
+    footer{text-align:center;margin-top:32px;color:var(--muted)}
+    .btn{display:inline-block;padding:10px 16px;border-radius:8px;text-decoration:none}
+    .primary{background:#4f46e5;color:white}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container" id="app" data-theme="light">
+    <header>
+      <div><strong>Front<span style="color:#6366f1">Dev</span></strong></div>
+      <div class="nav-links">
+        <a href="#features" class="muted">Features</a>
+        <a href="#portfolio" class="muted">Portfolio</a>
+        <a href="#contact" class="muted">Contact</a>
+        <button id="themeToggle">🌙</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1 style="font-size:2.2rem;margin:0">Craft beautiful responsive websites</h1>
+        <p class="muted">A compact starter for frontend developers — components, layout patterns, and responsive design best practices.</p>
+        <div style="margin-top:12px">
+          <a href="#portfolio" class="btn primary">See portfolio</a>
+          <a href="#contact" class="btn" style="margin-left:8px">Contact me</a>
+        </div>
+      </div>
+      <div>
+        <div style="height:200px;background:linear-gradient(90deg,#eef2ff,#ffffff);border-radius:12px;display:flex;align-items:center;justify-content:center">Illustration</div>
+      </div>
+    </section>
+
+    <section id="features" style="margin-top:24px">
+      <h2>Features</h2>
+      <div class="cards">
+        <div class="card"><strong>Responsive Layouts</strong><p class="muted">Grid + Flexbox patterns</p></div>
+        <div class="card"><strong>Components</strong><p class="muted">Reusable UI pieces</p></div>
+        <div class="card"><strong>Accessibility</strong><p class="muted">Focus states & semantic HTML</p></div>
+        <div class="card"><strong>Performance</strong><p class="muted">Optimised assets</p></div>
+      </div>
+    </section>
+
+    <section id="portfolio" style="margin-top:24px">
+      <h2>Portfolio</h2>
+      <div class="portfolio">
+        <div class="card">Project 1</div>
+        <div class="card">Project 2</div>
+        <div class="card">Project 3</div>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:24px">
+      <h2>Contact</h2>
+      <form onsubmit="event.preventDefault();alert('frontend-only');">
+        <div style="display:grid;gap:8px;grid-template-columns:1fr;">
+          <input name="name" placeholder="Your name" required />
+          <input name="email" placeholder="Email" required />
+          <textarea name="message" placeholder="Message" rows="4" required></textarea>
+          <button class="btn primary" type="submit">Send message</button>
+        </div>
+      </form>
+    </section>
+
+    <footer>
+      Built with ❤️ — FrontendShowcase • © <span id="year"></span>
+    </footer>
+  </div>
+
+  <script>
+    // Theme toggle with localStorage
+    const app = document.getElementById('app');
+    const btn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if (saved) app.setAttribute('data-theme', saved);
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches) app.setAttribute('data-theme','dark');
+
+    btn.addEventListener('click', () => {
+      const current = app.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      app.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      btn.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
